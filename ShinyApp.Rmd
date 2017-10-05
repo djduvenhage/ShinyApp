@@ -1,0 +1,47 @@
+---
+title: "Shiny APP Presentation"
+author: "Dawid J Duvenhage"
+date: "October 5, 2017"
+output: 
+  ioslides_presentation: 
+    fig_height: 3
+    fig_width: 3
+---
+
+## Data Exploration (mtcars)
+```{r, results='hide'}
+object.size(mtcars)
+dim(mtcars)
+sapply(mtcars, class)
+head(mtcars)
+summary(mtcars)
+boxplot(mpg~am, data=mtcars, xlab="Transmission", ylab="mpg")
+title(main= ("manual=1 & autom=0"))
+```
+
+## Model Fit Single Predictor as "am"
+```{r}
+fit1 <- lm(mpg~ am, data = mtcars)
+summary(fit1)$coefficients
+```
+
+## Step Model Fit All available Predictors
+```{r, results='hide'}
+fit2 <- lm(mpg~ ., data = mtcars)
+fit2 <- step(fit2, direction = "both")
+```
+```{r}
+summary(fit2)$coefficients
+```
+
+## ANOVA
+```{r, echo=FALSE}
+fit1 <- lm(mpg~ am, data = mtcars)
+fit3 <- lm(mpg~ wt + qsec + am, data = mtcars)
+```
+```{r}
+anova(fit1, fit3)
+```
+
+
+
